@@ -30,12 +30,32 @@ animationSprite.position.copyFrom(position)
 // animationSprite.position.set(position.x, position.y)
 
 
+// Создать клик:
+const onPointerDown = ({data}) => {
+  const position = data.getLocalPosition(app.stage)
 
+  createMarker(position.x, position.y)
+}
 
+app.stage.on('pointerdown', onPointerDown)
 
+-------------------------------------------------------
 
+PIXI.Ticker
+app.ticker.add(() => console.log('!'))
 
+Внутри тикера используется requestAnimation
+Класс тикера, который запускает цикл обновления, который прослушивают другие объекты.
 
+Этот класс состоит из слушателей, предназначенных для выполнения в следующем запрошенном кадре анимации.
+Кадры анимации запрашиваются только при необходимости,
+например, когда запущен тикер и у отправителя есть слушатели.
+
+deltaMS - время которое прошло от одного кадра до другого, внутри ticker
+
+-------------------------------------------------------
+
+lastTime - сколько всего времени прошло
 
 
 
