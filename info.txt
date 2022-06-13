@@ -1,17 +1,29 @@
-stage 
+stage
 - корневой контейнер и он является экземпляром пикси контейнер, куда помещается всё.
 
-renderer 
+renderer
 - отрисовывает всё, включая stage
 
 ticker
 - класс который работает с requestAnim, вызывает renderer
 
 
+PIXI.AnimatedSprite - создан для анимации
+- это простой способ отобразить анимацию, представленную списком текстур.
+
+this._tracksLeft = new AnimatedSprite([
+  Texture.from('TrackСFrame1'), Texture.from('TrackСFrame2')
+])
+this._tracksLeft.position.y = -80
+this._tracksLeft.anchor.set(0.5)
+this._tracksLeft.animationSpeed = 0.07
+this._tracksLeft.play()
+this._view.addChild(this._tracksLeft)
 
 
-
-
+copyFrom как более короткая запись position.set
+animationSprite.position.copyFrom(position)
+// animationSprite.position.set(position.x, position.y)
 
 
 

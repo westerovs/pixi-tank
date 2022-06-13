@@ -1,6 +1,6 @@
 import { Application, Graphics, Rectangle } from "./js/libs/pixi.mjs";
 import { assetsMap } from "./js/assetsMap.js";
-// // import { Tank } from "./js/Tank.js";
+import { Tank } from "./js/Tank.js";
 // // import { TweenManager, Tween } from "./js/utils/Tween.js"
 
 // Create the application
@@ -23,10 +23,17 @@ const runCircle = () => {
   app.stage.addChild(marker)
 }
 
+const createTank = () => {
+  const tank = new Tank()
+  app.stage.addChild(tank.view)
+  
+  window.tank = tank
+}
+
 const runGame = () => {
-  console.log('RUN GAME')
   runCircle()
   setPositionStage()
+  createTank()
 }
 
 // подгружаем все спрайты

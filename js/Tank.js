@@ -1,13 +1,34 @@
 // import { Container, AnimatedSprite, Texture, Sprite } from "./libs/pixi.mjs";
 
+import { AnimatedSprite, Container, Texture } from './libs/pixi.mjs';
+
+const createAnimatedSprite = (textureNames, position = {x: 0, y: 0}, anchor = {x: 0.5, y: 0.5}) => {
+  const textures = textureNames.map(name => Texture.from(name))
+  
+  const animationSprite = new AnimatedSprite(textures)
+  animationSprite.position.copyFrom(position)
+  // animationSprite.position.set(position.x, position.y)
+  animationSprite.anchor.copyFrom(anchor)
+
+  return animationSprite
+}
+
 export class Tank {
   constructor() {
+    this._view = new Container()
   
+    this._tracksLeft  = createAnimatedSprite(['TrackСFrame1', 'TrackСFrame2'], {x: 0, y: -80})
+    this._tracksRight = createAnimatedSprite(['TrackСFrame1', 'TrackСFrame2'], {x: 0, y: 80})
+    this._tracksLeft.animationSpeed  = 0.25;
+    this._tracksRight.animationSpeed = 0.25;
+    
+    this.view.addChild(this._tracksLeft, this._tracksRight)
   }
   
   // что бы добавить танк в пикси, он должен быть контейнером
+  // view будет создавать приватное значение, которое и будет контейнером
   get view() {
-    // view будет создавать приватное значение, которое и будет контейнером
+    return this._view
   }
 }
 
