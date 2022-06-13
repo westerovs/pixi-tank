@@ -24,39 +24,11 @@ export class Tank {
   constructor() {
     this._view = new Container()
   
+    this._bodyContainer = new Container()
+    this._towerContainer = new Container()
+    this._tracksLeft = null
+    this._tracksRight = null
     this.init()
-  }
-  
-  init() {
-    this.createTrackers()
-    this.createHull()
-    this.createGuns()
-  
-    this.view.addChild(createSprite('HeavyTowerB', {x: 0, y: 0}))
-  }
-  
-  createTrackers = () => {
-    this._tracksLeft  = createAnimatedSprite(['TrackСFrame1', 'TrackСFrame2'], {x: 0, y: -80})
-    this._tracksRight = createAnimatedSprite(['TrackСFrame1', 'TrackСFrame2'], {x: 0, y: 80})
-    this._tracksLeft.animationSpeed  = 0.25;
-    this._tracksRight.animationSpeed = 0.25;
-  
-    this.view.addChild(this._tracksLeft, this._tracksRight)
-  }
-  
-  
-  createHull = () => {
-    const hull = createSprite('HeavyHullB')
-    this.view.addChild(hull)
-  }
-  
-  createGuns = () => {
-    const gunLeft = createSprite('HeavyGunB', {x: 140, y: -37})
-    const gunRight = createSprite('HeavyGunB', {x: 160, y: 37})
-    const GunConnectorD = createSprite('GunConnectorD', {x: 80, y: 0})
-    // this.view.addChild(createSprite('GunConnectorD', {x: 80, y: 0}))
-  
-    this.view.addChild(gunLeft, gunRight)
   }
   
   // что бы добавить танк в пикси, он должен быть контейнером
@@ -65,7 +37,58 @@ export class Tank {
     return this._view
   }
   
+  init() {
+    this.#createTrackers()
+    this.#createHull()
+    this.#createTower()
+
+    // this._bodyContainer.addChild(this._towerContainer)
+
+    this._view.addChild(this._bodyContainer)
+  }
   
+  startTracks() {
+    this._tracksLeft.play();
+    this._tracksRight.play();
+  }
+  
+  stopTracks() {
+    this._tracksLeft.stop();
+    this._tracksRight.stop();
+  }
+  
+  rotateBodyBy = (angle) => {
+    this._bodyContainer.rotation += angle
+  }
+  
+  rotateTowerBy = (angle) => {
+    this._towerContainer.rotation += angle
+  }
+  
+  #createTrackers = () => {
+    this._tracksLeft  = createAnimatedSprite(['TrackСFrame1', 'TrackСFrame2'], {x: 0, y: -80})
+    this._tracksRight = createAnimatedSprite(['TrackСFrame1', 'TrackСFrame2'], {x: 0, y: 80})
+    this._tracksLeft.animationSpeed  = 0.25;
+    this._tracksRight.animationSpeed = 0.25;
+  
+    // this.view.addChild(this._tracksLeft, this._tracksRight)
+    this._bodyContainer.addChild(this._tracksLeft, this._tracksRight)
+  }
+  
+  #createHull = () => {
+    const hull = createSprite('HeavyHullB')
+    this._bodyContainer.addChild(hull)
+  }
+  
+  #createTower = () => {
+    const tower = createSprite('HeavyTowerB', {x: 0, y: 0})
+    const GunConnector = createSprite('GunConnectorD', {x: 80, y: 0})
+    const gunLeft = createSprite('HeavyGunB', {x: 140, y: -27})
+    const gunRight = createSprite('HeavyGunB', {x: 160, y: 29})
+  
+    this._towerContainer.addChild(tower, GunConnector, gunLeft, gunRight)
+    this._bodyContainer.addChild(this._towerContainer)
+  }
 }
 
 
