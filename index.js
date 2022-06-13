@@ -1,7 +1,7 @@
 import { Application, Graphics, Rectangle } from "./js/libs/pixi.mjs";
-// import { assetsMap } from "./js/assetsMap.js";
-// import { Tank } from "./js/Tank.js";
-// import { TweenManager, Tween } from "./js/utils/Tween.js"
+import { assetsMap } from "./js/assetsMap.js";
+// // import { Tank } from "./js/Tank.js";
+// // import { TweenManager, Tween } from "./js/utils/Tween.js"
 
 // Create the application
 const app = new Application({
@@ -11,7 +11,27 @@ const app = new Application({
   backgroundColor: 0x111444,
 });
 
-document.body.append(app)
+const setPositionStage = () => {
+  app.stage.position.set(1366 / 2, 1366 / 2)
+}
+
+
+const runCircle = () => {
+  const marker = new Graphics()
+  marker.beginFill(0xfff000, 1)
+  marker.drawCircle(0, 0, 15)
+  app.stage.addChild(marker)
+}
+
+const runGame = () => {
+  console.log('RUN GAME')
+  runCircle()
+  setPositionStage()
+}
+
+// подгружаем все спрайты
+assetsMap.sprites.forEach((value) => app.loader.add(value.name, value.url))
+app.loader.load(runGame) // когда всё загрузится, запускаем ф-цию которая стартанет игру
 
 
 
