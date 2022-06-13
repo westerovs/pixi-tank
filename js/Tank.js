@@ -1,6 +1,6 @@
 // import { Container, AnimatedSprite, Texture, Sprite } from "./libs/pixi.mjs";
 
-import { AnimatedSprite, Container, Texture } from './libs/pixi.mjs';
+import { AnimatedSprite, Container, Sprite, Texture } from './libs/pixi.mjs';
 
 const createAnimatedSprite = (textureNames, position = {x: 0, y: 0}, anchor = {x: 0.5, y: 0.5}) => {
   const textures = textureNames.map(name => Texture.from(name))
@@ -13,16 +13,50 @@ const createAnimatedSprite = (textureNames, position = {x: 0, y: 0}, anchor = {x
   return animationSprite
 }
 
+const createSprite = (textureName, position = {x: 0, y: 0}, anchor = {x: 0.5, y: 0.5}) => {
+    const sprite = new Sprite(Texture.from(textureName));
+    sprite.position.copyFrom(position);
+    sprite.anchor.copyFrom(anchor);
+    return sprite;
+  };
+
 export class Tank {
   constructor() {
     this._view = new Container()
   
+    this.init()
+  }
+  
+  init() {
+    this.createTrackers()
+    this.createHull()
+    this.createGuns()
+  
+    this.view.addChild(createSprite('HeavyTowerB', {x: 0, y: 0}))
+  }
+  
+  createTrackers = () => {
     this._tracksLeft  = createAnimatedSprite(['TrackСFrame1', 'TrackСFrame2'], {x: 0, y: -80})
     this._tracksRight = createAnimatedSprite(['TrackСFrame1', 'TrackСFrame2'], {x: 0, y: 80})
     this._tracksLeft.animationSpeed  = 0.25;
     this._tracksRight.animationSpeed = 0.25;
-    
+  
     this.view.addChild(this._tracksLeft, this._tracksRight)
+  }
+  
+  
+  createHull = () => {
+    const hull = createSprite('HeavyHullB')
+    this.view.addChild(hull)
+  }
+  
+  createGuns = () => {
+    const gunLeft = createSprite('HeavyGunB', {x: 140, y: -37})
+    const gunRight = createSprite('HeavyGunB', {x: 160, y: 37})
+    const GunConnectorD = createSprite('GunConnectorD', {x: 80, y: 0})
+    // this.view.addChild(createSprite('GunConnectorD', {x: 80, y: 0}))
+  
+    this.view.addChild(gunLeft, gunRight)
   }
   
   // что бы добавить танк в пикси, он должен быть контейнером
@@ -30,6 +64,8 @@ export class Tank {
   get view() {
     return this._view
   }
+  
+  
 }
 
 

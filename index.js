@@ -16,7 +16,7 @@ const setPositionStage = () => {
 }
 
 
-const runCircle = () => {
+const runMarker = () => {
   const marker = new Graphics()
   marker.beginFill(0xfff000, 1)
   marker.drawCircle(0, 0, 15)
@@ -31,9 +31,9 @@ const createTank = () => {
 }
 
 const runGame = () => {
-  runCircle()
   setPositionStage()
   createTank()
+  runMarker()
 }
 
 // подгружаем все спрайты

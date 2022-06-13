@@ -20,7 +20,11 @@ this._tracksLeft.animationSpeed = 0.07
 this._tracksLeft.play()
 this._view.addChild(this._tracksLeft)
 
+Создать спрайт:
+const sprite = new Sprite(Texture.from('HeavyHullB')) // ключ
+this.view.addChild(sprite)
 
+Задать параметры
 copyFrom как более короткая запись position.set
 animationSprite.position.copyFrom(position)
 // animationSprite.position.set(position.x, position.y)
